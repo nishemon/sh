@@ -3,8 +3,11 @@ shell script utility (bash)
 ```bash
 # wait for any process
 function await() { while ps $@ > /dev/null; do sleep 10s; done }
+
+# get filesize
 alias filesize='du -b'
 
+# make nProc worker
 function mkworkers() {
   if (( 0 == $# )); then
     echo 'Usage: mkcpuq fifoname [nThreads [command+args]]'
@@ -21,7 +24,7 @@ function mkworkers() {
     xargs -d '\n' -n1 -P$N_CORES bash -c < /tmp/$NAME
   fi
 }
-
+# submit to worker
 function submit() {
   NAME=$1
   if [ -p /tmp/$NAME ]; then
